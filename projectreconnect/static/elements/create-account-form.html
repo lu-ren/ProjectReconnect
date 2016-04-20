@@ -1,0 +1,79 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+<dom-module id="create-account">
+    <template>
+        <paper-card>
+            <form is="account_creation_form" id="form" method="post" action={{actionUrl}}>
+                <iron-image src="http://lorempixel.com/100/100"></iron-image>
+                <paper-input id="name" name="Name" on-blur="addName" label="First, Last"></paper-input>
+                <paper-dropdown-menu label="Address">
+                    <paper-listbox id="organization" class="dropdown-content">
+                        <template is="dom-repeat" items={{organizations}}>
+                            <paper-item on-click="addOrganization">{{item}}</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-input id="subjectTags" name="SubjectTags" label="Description" on-keydown="addTag"></paper-input>
+                <iron-list items="[[rs_tags]]">
+                    <template>
+                        <paper-item on-click="deleteTag">[[item]]</paper-item>
+                    </template>
+                </iron-list>
+                <paper-button raised on-click="submitForm">Submit</paper-button>
+            </form>
+        </paper-card>
+    </template>
+    <script>
+        Polymer({
+            is: 'create-account',
+            properties: {
+                actionUrl: String,
+                organizations: Array,
+                rs_name: String,
+                rs_tags: {
+                    type: Array,
+                    value: []
+                },
+                rs_organization: String
+            },
+            addName: function(e) {
+                this.rs_name = this.$.name.value;
+                if (this.rs_name === "")
+                    return;
+            },
+            addOrganization: function(e) {
+                this.rs_organization = this.organizations[this.$.organization.selected];
+                if (this.rs_organization === "")
+                    return;
+            },
+            addTag: function(e) {
+                if (e.keyCode === 13) {
+                    var input = this.$.subjectTags;
+                    var val = input.value;
+                    if (val === "")
+                        return;
+                    this.push('rs_tags', val);
+                    input.value = "";
+                }
+            },
+            deleteTag: function(e) {
+                tag = e.model.item;
+                var index = this.rs_tags.indexOf(tag);
+                this.splice('rs_tags', index, 1);
+            },
+            submitForm: function(e) {
+                var response = {name: this.rs_name, tags: this.rs_tags, 
+                    organization: this.rs_organization};
+                alert(JSON.stringify(response));
+            }
+        });
+    </script>
+</dom-module>

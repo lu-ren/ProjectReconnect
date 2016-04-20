@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="static/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="static/bower_components/web-component-tester/browser.js"></script>
+    <!-- import the element to test -->
+    <link rel="import" href="static/elements/session-card.html">
+  </head>
+  <body>
+    <!-- use the document as a place to set up your fixtures -->
+    <test-fixture id="my-element-fixture">
+      <template>
+        <session-card>
+            <div class="session-title">test</div>
+            <div class="session-description">test</div>
+        </session-cardt>
+      </template>
+    </test-fixture>
+    <script>
+      suite('<session-card>', function() {
+        var myEl;
+        setup(function() {
+          myEl = fixture('my-element-fixture');
+        });
+        test('is hidden', function() {
+          myEl.setAttribute('hidden','true');
+          assert.equal(myEl.hidden, 'true');
+        });
+      });
+    </script>
+  </body>
+</html>

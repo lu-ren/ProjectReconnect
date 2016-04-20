@@ -1,0 +1,7 @@
+virtualenv
+venv
+vmv
+__pycache__
+*.pyc
+*.un~
+!/.gitignore

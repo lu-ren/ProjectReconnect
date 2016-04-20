@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+                <title>{{ title }}</title>
+        {% else %}
+                <title>Unnamed page</title>
+        {% endif %}
+        {% block meta %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endblock %}
+        {% block scripts %}
+            <script src="static/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+            <link rel="import" href="static/elements/projectreconnect-element.html">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <!--
+        {% block materialbar %}
+        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+        </paper-menu>
+        {% endblock %}
+        -->
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

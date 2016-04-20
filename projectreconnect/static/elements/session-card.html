@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<dom-module id="session-card">
+  <template>
+    <style>
+      /* local DOM styles go here */
+    </style>
+    <!-- local DOM goes here -->
+        <paper-card>
+            <h1><content select='.session-title'></content></h1>
+            <p><content select='.session-description'></content></p>
+        </paper-card>
+  </template>
+  <script>
+  Polymer({
+    is: 'session-card',
+  });
+  </script>
+</dom-module>

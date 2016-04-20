@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="shared-styles-element.html">
+<dom-module id="splash-card">
+  <template>
+        <style include="shared-styles"></style>
+    <!-- local DOM goes here -->
+        <paper-card class="primary">
+                <h1>Splash screen</h1> 
+                <h2>Welcome new user</h2> 
+                <p><content></content></p>
+        </paper-card>
+  </template>
+  <script>
+  Polymer({
+    is: 'splash-card',
+  });
+  </script>
+</dom-module>

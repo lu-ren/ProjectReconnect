@@ -1,0 +1,26 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
+<dom-module id="tag-dialog">
+  <template>
+    <style>
+      /* local DOM styles go here */
+    </style>
+    <!-- local DOM goes here -->
+       <paper-dropdown-menu label="Tags">
+           <paper-menu multi class="dropdown-content">
+                <paper-item>Croissant</paper-item>
+                <paper-item>Dirt</paper-item>
+                <paper-item>Escargot</paper-item>
+            </paper-menu>
+        </paper-dropdown-menu>
+      </template>
+  <script>
+  Polymer({
+    is: 'tag-dialog',
+  });
+  </script>
+</dom-module>

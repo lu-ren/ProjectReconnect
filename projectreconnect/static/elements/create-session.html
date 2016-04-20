@@ -1,0 +1,24 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="create-session">
+  <template>
+    <style>
+      /* local DOM styles go here */
+    </style>
+    <!-- local DOM goes here -->
+        <paper-card>
+             <form>
+                <paper-input label="Title"></paper-input>
+                <paper-input label="Description"></paper-input>
+                <paper-button>Create session</paper-button>
+              </form>
+        </paper-card>
+  </template>
+  <script>
+  Polymer({
+    is: 'create-session',
+  });
+  </script>
+</dom-module>
