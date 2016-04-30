@@ -1,29 +1,33 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
-        {% if title %}
-                <title>{{ title }}</title>
-        {% else %}
-                <title>Unnamed page</title>
-        {% endif %}
-        {% block meta %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block title %}
+          <title>Project Reconnect</title>
         {% endblock %}
-        {% block scripts %}
-            <script src="static/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-            <link rel="import" href="static/elements/projectreconnect-element.html">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        {% block css %}
+        <!-- Latest compiled and minified CSS -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+            integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+          <link href="/static/css/projectreconnect.css" rel="stylesheet">
+        {% endblock %}
+
+        {% block meta %}
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
         {% endblock %}
     </head>
+
     <body>
-        <!--
-        {% block materialbar %}
-        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-        </paper-menu>
-        {% endblock %}
-        -->
-        {% block content %}
-        {% endblock %}
+      {% block content %}
+      {% endblock%}
+
+      {% block scripts %}
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"
+          integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+      {% endblock %}
     </body>
 </html>

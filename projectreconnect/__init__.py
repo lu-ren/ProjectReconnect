@@ -17,7 +17,7 @@ def init_app(config_filename):
     db = SQLAlchemy(app)
 
     import projectreconnect.models
-    import projectreconnect.auth
+    #import projectreconnect.auth
     from projectreconnect.views import home_bp
     from projectreconnect.controllers import auth_bp, forms_bp
 

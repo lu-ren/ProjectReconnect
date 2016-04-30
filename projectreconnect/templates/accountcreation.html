@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-    <body>
-        <h1>Project Reconnect Account Creation</h1>
-        <!--must put single quotes when passing into python list and using tojson-->
-        <create-account action-url={{ formControllerUrl }}
-                            organizations='{{ organizations|tojson }}'></create-account>
-    </body>
-{% endblock %}

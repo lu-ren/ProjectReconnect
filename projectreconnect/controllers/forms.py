@@ -4,11 +4,15 @@ import pdb
 
 forms_bp = Blueprint('form', __name__)
 
+#@forms_bp.route('/create_account', methods=['POST'])
+#def create_account():
+    #if 'allowed' in session:
+        #if session['allowed']:
+            #full_name = request.form['Name']
+            #school = request.form['School']
+            #subjects = request.form['Subjects']
+    #return redirect(url_for('home.home'))
 @forms_bp.route('/create_account', methods=['POST'])
 def create_account():
-    if 'allowed' in session:
-        if session['allowed']:
-            full_name = request.form['Name']
-            school = request.form['School']
-            subjects = request.form['Subjects']
-    return redirect(url_for('home.home'))
+    if not current_user.is_anonymous:
+        return redirect(url_for('home.home'))
