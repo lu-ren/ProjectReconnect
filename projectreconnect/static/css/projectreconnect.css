@@ -6,10 +6,12 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
+
 .navbar {
   background: rgba(255, 255, 255, 0.5);
   color: inherit;
 }
+
 .jumbotron {
     background: rgba(255, 255, 255, 0.0);
 	color: inherit;
@@ -58,4 +60,13 @@ h1, input {
 
 .pass:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+div.form_error {
+  color:red;
+  text-align:center;
+}
+
+div.logbox_submit {
+    text-align:center;
 }

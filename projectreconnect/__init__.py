@@ -17,10 +17,8 @@ def init_app(config_filename):
     db = SQLAlchemy(app)
 
     import projectreconnect.models
-    #import projectreconnect.auth
     from projectreconnect.views import home_bp
-    from projectreconnect.controllers import auth_bp, forms_bp
+    from projectreconnect.controllers import auth_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(forms_bp, url_prefix='/form')

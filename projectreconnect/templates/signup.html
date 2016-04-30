@@ -2,14 +2,27 @@
 {% block content %}
 <div class="col-md-6">
 <div id="logbox">
-  <form id="signup" method="post" action="/signup">
+    <form id="signup" method="post" action="{{url_for('home.signup')}}">
+        {{form.hidden_tag()}}
     <h1 style="padding-bottom: 20px">Sign Up</h1>
-    <input name="user[name]" type="text" placeholder="Email address" autofocus="autofocus" required="required" class="input pass"/>
-    <input name="user[password]" type="password" placeholder="Choose a password" required="required" class="input pass"/>
-    <input name="user[password2]" type="password" placeholder="Confirm password" required="required" class="input pass"/>
-    <button type="submit" class="btn btn-info">Create Account</button>
-    <div class="text-center" style="padding-top: 20px">
-        Already have an account? <a href="#" id="login_id">login</a>
+    <div class="form_error">
+        {{form.name.errors[0]}}
+    </div>
+    {{form.name(placeholder="First and last name", type="text", class="input pass")}}
+
+    <div class="form_error">
+        {{form.email.errors[0]}}
+    </div>
+    {{form.email(placeholder="Email address", type="text", class="input pass")}}
+
+    <div class="form_error">
+        {{form.password.errors[0]}}
+    </div>
+    {{form.password(placeholder="Password", type="password", class="input pass")}}
+
+    {{form.confirm(placeholder="Confirm Password", type="password", class="input pass")}}
+    <div class="logbox_submit">
+        <button type="submit" class="btn btn-info">Create Account</button>
     </div>
   </form>
 </div>
