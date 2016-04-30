@@ -2,13 +2,15 @@ from flask import redirect, url_for, flash, current_app
 import logging
 from logging.handlers import RotatingFileHandler
 from projectreconnect import init_app
+import pdb
 
-init_app('config.DevelopConfig')
+init_app('config.BaseConfig')
 from projectreconnect import app
 
 @app.before_first_request
 def setup():
     from projectreconnect import db
+    db.drop_all() #for development purposes
     db.create_all()
 
 if __name__ == '__main__':
