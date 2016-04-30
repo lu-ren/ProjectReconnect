@@ -22,7 +22,7 @@ class User(db.Model):
         self.hashed_password = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(hashed_password, password)
+        return check_password_hash(self.hashed_password, password)
 
     def is_authenticated(self):
         return True

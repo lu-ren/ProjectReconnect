@@ -4,6 +4,13 @@ from wtforms import TextAreaField, BooleanField
 from wtforms.validators import Required, EqualTo, Optional
 from wtforms.validators import Length, Email
 
+class SignInForm(Form):
+    email = TextField('Email address', validators=[
+        Required('Please provide a valid email address')])
+    password = PasswordField('Password Field', validators=[
+        Required('Please provide a password')])
+        
+
 class SignUpForm(Form):
     name = TextField('Name', validators=[
         Required('Please provide a name'),

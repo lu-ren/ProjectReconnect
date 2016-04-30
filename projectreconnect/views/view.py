@@ -1,16 +1,27 @@
-from flask import Blueprint, render_template, current_app, redirect, url_for, Markup, request
+from flask import Blueprint, render_template, current_app, redirect, url_for, Markup, request, flash
 from flask.ext.login import current_user, login_required
 import json
-from projectreconnect.forms.signup import SignUpForm
-from projectreconnect.controllers.forms import create_account
+from projectreconnect.forms.signup import SignInForm, SignUpForm
+from projectreconnect.controllers.forms import create_account, check_account
 from projectreconnect.models.model import User
 
 home_bp = Blueprint('home', __name__)
 
-@home_bp.route('/')
+@home_bp.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_anonymous:
-        return render_template('home.html')
+        if request.method == 'POST':
+            form = SignInForm(request.form)
+            if form.validate():
+                user = User.query.filter_by(email=form.email.data).first()
+                if not user:
+                    flash('Email does not exist')
+                    return render_template('home.html', form=form)
+                if not user.check_password(form.password.data):
+                    flash('Invalid password')
+                    return render_template('home.html', form=form)
+                return redirect(url_for('home.dashboard', uid=user.uid))
+        return render_template('home.html', form=SignInForm())
     else:
         return redirect(url_for('home.dashboard'), uid=current_user.uid)
 

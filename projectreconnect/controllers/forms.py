@@ -11,3 +11,6 @@ def create_account(name, email, password):
     login_user(user)
     #login_user(user, remember=True) For development purposes, disabled
     return user.uid
+
+def check_account(user, password):
+    return user.check_password(password)
