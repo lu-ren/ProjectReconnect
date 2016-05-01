@@ -1,9 +1,13 @@
 from flask import Blueprint, render_template, current_app, redirect, url_for, Markup, request, flash
 from flask.ext.login import current_user, login_required, login_user, logout_user
+from werkzeug import secure_filename
+import os
 import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
 from projectreconnect.controllers.forms import create_account
 from projectreconnect.models.model import User
+from projectreconnect import app
+import pdb
 
 home_bp = Blueprint('home', __name__)
 
@@ -24,7 +28,7 @@ def home():
                 return redirect(url_for('home.dashboard', uid=user.uid))
         return render_template('home.html', form=SignInForm())
     else:
-        return redirect(url_for('home.dashboard'), uid=current_user.uid)
+        return redirect(url_for('home.dashboard', uid=current_user.uid))
 
 @home_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -62,3 +66,13 @@ def logout():
 @login_required
 def upload():
     file = request.files['file']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 200
+    else:
+        return 400
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']

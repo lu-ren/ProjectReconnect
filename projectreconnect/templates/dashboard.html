@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block meta %}
+  {{ super() }}
+  <meta id="upload-url" data-name={{ url_for('home.upload') }}>
+{% endblock %}
 {% block content %}
   <nav class="navbar navbar-light bg-faded">
     <ul class="nav navbar-nav">
@@ -15,11 +19,11 @@
         {% if user.genome_obj is undefined %}
             <div class="text-center">
                 <div id="logbox">
-                    <form id="genome_upload" method="post" enctype=multipart/form-data action="{{url_for('home.upload')}}">
+                    <form id="genome-upload" method="post" enctype=multipart/form-data action="">
                     <div style="padding-bottom: 20px">
-                        <input type="file" name=file>
+                        <input type="file" id="file-select" name=file>
                     </div>
-                    <button type="submit" class="btn btn-info">Upload</button>
+                    <button type="submit" id="upload-btn" class="btn btn-info">Upload</button>
                   </form>
                 </div>
             </div>
@@ -27,4 +31,34 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        var form = document.getElementById('genome-upload')
+        var fileSelect = document.getElementById('file-select')
+        var uploadButton = document.getElementById('upload-btn')
+        form.onsubmit = function(event) {
+            event.preventDefault();
+
+            //Update button text
+            uploadButton.innerHTML = 'Uploading...';
+            var formData = new FormData();
+            formData.append('file', fileSelect.files[0]);
+
+            var xhr = new XMLHttpRequest();
+            var actionUrl = "0.0.0.0:5000" + $('#upload-url').data().name;
+            xhr.open('POST', actionUrl, true);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                //File uploaded
+                uploadButton.innerHtml = 'Upload';
+              } else {
+                alert('An error has occurred!');
+              }
+            };
+            xhr.send(formData);
+        };
+    </script>
 {% endblock %}
