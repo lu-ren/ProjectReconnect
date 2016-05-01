@@ -34,6 +34,15 @@ h1 {
   font-weight: 300;
 }
 
+h1.welcome_msg {
+    font-size: 200%;
+    font-weight: 350;
+}
+
+p.dash_msg {
+    text-align: center;
+}
+
 h1, input {
   font-family: "Open Sans", Helvetica, sans-serif;
 }

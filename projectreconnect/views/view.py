@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, current_app, redirect, url_for, Markup, request, flash
-from flask.ext.login import current_user, login_required
+from flask.ext.login import current_user, login_required, login_user, logout_user
 import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
-from projectreconnect.controllers.forms import create_account, check_account
+from projectreconnect.controllers.forms import create_account
 from projectreconnect.models.model import User
 
 home_bp = Blueprint('home', __name__)
@@ -20,6 +20,7 @@ def home():
                 if not user.check_password(form.password.data):
                     flash('Invalid password')
                     return render_template('home.html', form=form)
+                login_user(user)
                 return redirect(url_for('home.dashboard', uid=user.uid))
         return render_template('home.html', form=SignInForm())
     else:
@@ -35,8 +36,10 @@ def signup():
                 if email_exist:
                     form.email.errors.append('Email already taken')
                     return render_template('signup.html', form=form)
-                uid = create_account(form.name.data, form.email.data, form.password.data)
-                return redirect(url_for('home.dashboard', uid=uid))
+                user = create_account(form.name.data, form.email.data, form.password.data)
+                login_user(user)
+                #login_user(user, remember=True)
+                return redirect(url_for('home.dashboard', uid=user.uid))
             else:
                 return render_template('signup.html', form=form)
         return render_template('signup.html', form=SignUpForm())
@@ -46,4 +49,11 @@ def signup():
 @home_bp.route('/dashboard/<int:uid>')
 @login_required
 def dashboard(uid):
-    return render_template('dashboard.html')
+    user = User.query.filter_by(uid=uid).first()
+    return render_template('dashboard.html', user=user)
+
+@home_bp.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home.home'))

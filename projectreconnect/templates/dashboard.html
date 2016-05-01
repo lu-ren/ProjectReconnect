@@ -1,1 +1,21 @@
 {% extends "base.html" %}
+{% block content %}
+  <nav class="navbar navbar-light bg-faded">
+    <ul class="nav navbar-nav">
+    <form class="form-inline pull-xs-right" method="post" action="{{url_for('home.logout')}}">
+      <button type="submit" class="btn btn-secondary">Log out</button>
+    </form>
+  </nav>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="welcome_msg">
+            Welcome {{user.full_name}}
+        </h1>
+        {% if user.genome_obj is undefined %}
+            <p class="dash_msg">
+                You haven't uploaded your genomic data yet...
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
