@@ -69,9 +69,9 @@ def upload():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 200
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     else:
-        return 400
+        abort(400)
 
 def allowed_file(filename):
     return '.' in filename and \

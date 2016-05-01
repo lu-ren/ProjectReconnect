@@ -17,7 +17,7 @@
         </h1>
         <div class="dash">
         {% if user.genome_obj is undefined %}
-            <div class="text-center">
+            <div id="upload-box" class="text-center">
                 <div id="logbox">
                     <form id="genome-upload" method="post" enctype=multipart/form-data action="">
                     <div style="padding-bottom: 20px">
@@ -36,9 +36,9 @@
 {% block scripts %}
     {{ super() }}
     <script type="text/javascript">
-        var form = document.getElementById('genome-upload')
-        var fileSelect = document.getElementById('file-select')
-        var uploadButton = document.getElementById('upload-btn')
+        var form = document.getElementById('genome-upload');
+        var fileSelect = document.getElementById('file-select');
+        var uploadButton = $('#upload-btn');
         form.onsubmit = function(event) {
             event.preventDefault();
 
@@ -46,14 +46,15 @@
             uploadButton.innerHTML = 'Uploading...';
             var formData = new FormData();
             formData.append('file', fileSelect.files[0]);
-
+            alert(JSON.stringify(formData));
             var xhr = new XMLHttpRequest();
-            var actionUrl = "0.0.0.0:5000" + $('#upload-url').data().name;
+            var actionUrl = "http://0.0.0.0:5000" + $('#upload-url').data().name;
             xhr.open('POST', actionUrl, true);
             xhr.onload = function() {
               if (xhr.status === 200) {
                 //File uploaded
                 uploadButton.innerHtml = 'Upload';
+                alert('Success!');
               } else {
                 alert('An error has occurred!');
               }
