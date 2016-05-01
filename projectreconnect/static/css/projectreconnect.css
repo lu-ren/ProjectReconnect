@@ -71,6 +71,10 @@ h1, input {
   -webkit-box-shadow: 0 0 0 1000px white inset;
 }
 
+.table {
+  background-color:rgba(255, 255, 255, 0.5);
+}
+
 div.form_error {
   color:red;
   text-align:center;

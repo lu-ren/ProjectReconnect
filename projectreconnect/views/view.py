@@ -40,7 +40,7 @@ def signup():
                 if email_exist:
                     form.email.errors.append('Email already taken')
                     return render_template('signup.html', form=form)
-                user = create_account(form.name.data, form.email.data, form.password.data)
+                user = create_account(form.name.data, form.age.data, form.email.data, form.password.data)
                 login_user(user)
                 #login_user(user, remember=True)
                 return redirect(url_for('home.dashboard', uid=user.uid))
@@ -67,8 +67,10 @@ def logout():
 def upload():
     file = request.files['file']
     if file and allowed_file(file.filename):
+        import time #For development purposes
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        time.sleep(3)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     else:
         abort(400)

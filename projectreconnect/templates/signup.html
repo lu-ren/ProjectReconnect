@@ -16,6 +16,11 @@
     {{form.email(placeholder="Email address", type="text", class="input pass")}}
 
     <div class="form_error">
+        {{form.age.errors[0]}}
+    </div>
+    {{form.age(placeholder="Age", type="text", class="input pass")}}
+
+    <div class="form_error">
         {{form.password.errors[0]}}
     </div>
     {{form.password(placeholder="Password", type="password", class="input pass")}}

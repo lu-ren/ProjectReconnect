@@ -9,12 +9,14 @@ class User(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     full_name = db.Column(db.String, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String, nullable=False)
     hashed_password = db.Column(db.String, nullable=False)
     genomic_obj = db.Column(db.PickleType)
 
-    def __init__(self, full_name, email, password):
+    def __init__(self, full_name, age, email, password):
         self.full_name = full_name
+        self.age = age
         self.email = email
         self.set_password(password)
 
