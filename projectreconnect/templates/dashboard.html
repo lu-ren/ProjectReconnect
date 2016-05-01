@@ -11,11 +11,20 @@
         <h1 class="welcome_msg">
             Welcome {{user.full_name}}
         </h1>
+        <div class="dash">
         {% if user.genome_obj is undefined %}
-            <p class="dash_msg">
-                You haven't uploaded your genomic data yet...
-            </p>
+            <div class="text-center">
+                <div id="logbox">
+                    <form id="genome_upload" method="post" enctype=multipart/form-data action="{{url_for('home.upload')}}">
+                    <div style="padding-bottom: 20px">
+                        <input type="file" name=file>
+                    </div>
+                    <button type="submit" class="btn btn-info">Upload</button>
+                  </form>
+                </div>
+            </div>
         {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

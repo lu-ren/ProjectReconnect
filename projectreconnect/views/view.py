@@ -57,3 +57,8 @@ def dashboard(uid):
 def logout():
     logout_user()
     return redirect(url_for('home.home'))
+
+@home_bp.route('/upload', methods=['POST'])
+@login_required
+def upload():
+    file = request.files['file']

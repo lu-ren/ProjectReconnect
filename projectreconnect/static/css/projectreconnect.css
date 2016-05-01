@@ -79,3 +79,7 @@ div.form_error {
 div.logbox_submit {
     text-align:center;
 }
+
+div.dash {
+    padding-top: 90px;
+}
