@@ -104,7 +104,7 @@ def get_matches(Parents, Child, allele_Frequencies):
         tmp2 = float(num_SNP_Pos)
         parent_Percent_List.append((match[0], "{0:.0f}%".format((tmp1/tmp2)*100)))
 
-    return parent_Percent_List
+    return parent_Percent_List[:10]
 
 if __name__ == "__main__":
     Parents = numpy.random.randint(3, size=(501, 1000))

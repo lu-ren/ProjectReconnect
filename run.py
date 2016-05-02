@@ -10,9 +10,9 @@ from projectreconnect import app
 @app.before_first_request
 def setup():
     from projectreconnect import db
-    db.drop_all() #for development purposes
-    db.create_all()
-    generate_sim_data()
+    # db.drop_all() #for development purposes
+    # db.create_all()
+    # generate_sim_data()
 
 def generate_sim_data():
     import csv
@@ -34,9 +34,11 @@ def generate_sim_data():
         emaillst.append('jp3999@hogwarts.edu')
         agelst.append(58)
         genomelst.append(numpy.array(genome))
-    with open('scripts/Genotypes_Only.txt') as f:
+    pdb.set_trace()
+    with open('scripts/100000_Simulated_Samples.txt') as f:
         reader = csv.reader(f)
-        for elem in reader:
+        for x, elem in enumerate(reader):
+            print(x)
             strlist = list(elem[0])
             numlist = [int(s) for s in strlist]
             # numlist.insert(0, 0)
@@ -48,6 +50,7 @@ def generate_sim_data():
             agelst.append(randint(20,100))
             genomelst.append(numpy.array(numlist))
     for x in range(len(namelst)):
+        print(x)
         new_user = User(namelst[x], agelst[x], emaillst[x], 'password')
         new_user.genomic_obj = genomelst[x]
         db.session.add(new_user)

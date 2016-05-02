@@ -57,13 +57,21 @@
                 //File uploaded
                 var response = JSON.parse(xhr.response);
                 replaceWelcome();
-                buildTable();
+                buildTable(response);
               } else {
                 alert('An error has occurred!');
               }
             };
             xhr.send(formData);
-            // $('#welcome-msg').innerHTML = "Uploading...";
+            spinner();
+        };
+
+        var spinner = function() {
+          $('#upload-box').fadeOut("slow", function() {
+            var spinner = $("<h1 id='spinner' style='padding-bottom:20px'> Please wait while we get your matches...</h1>").hide();
+            $(this).replaceWith(spinner);
+            $('#spinner').fadeIn("slow");
+          })
         };
 
         var replaceWelcome = function() {
@@ -75,13 +83,13 @@
         };
 
 
-        var buildTable = function() {
-          $('#upload-box').fadeOut("slow", function() {
-            var people = [
-              {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com', PercentMatch:'98'},
-              {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com', PercentMatch:'98'},
-              {Name: 'Bane Doe', Age: '28', Email: 'banedoe@email.com', PercentMatch:'69'}
-            ];
+        var buildTable = function(people) {
+          $('#spinner').fadeOut("slow", function() {
+            // var people = [
+            //   {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com', PercentMatch:'98'},
+            //   {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com', PercentMatch:'98'},
+            //   {Name: 'Bane Doe', Age: '28', Email: 'banedoe@email.com', PercentMatch:'69'}
+            // ];
             var tmpl = $.templates('resultsTable',
               "<tr>\
                   <td>{{:Name}}</td>\

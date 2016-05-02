@@ -4,7 +4,7 @@ from werkzeug import secure_filename
 import os
 import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
-from projectreconnect.controllers.forms import create_account, update_user_genome, run_match
+from projectreconnect.controllers.forms import create_account, update_user_genome, run_match, get_match_results
 from projectreconnect.models.model import User
 from projectreconnect import app
 import pdb
@@ -53,6 +53,8 @@ def signup():
 @home_bp.route('/dashboard/<int:uid>')
 @login_required
 def dashboard(uid):
+    if current_user.uid != uid:
+        return redirect(url_for('home.home'))
     user = User.query.filter_by(uid=uid).first()
     return render_template('dashboard.html', user=user)
 
@@ -68,13 +70,15 @@ def upload():
     file = request.files['file']
     if file and allowed_file(file.filename):
         import numpy
+        import time
         datastring = file.readline().decode('ascii')
         reg_array = [int(string) for string in datastring]
         genome = numpy.array(reg_array)
         update_user_genome(genome)
         results = run_match(current_user)
-        pdb.set_trace()
-        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+        match_results = get_match_results(results)
+        time.sleep(3)
+        return json.dumps(match_results), 200, {'ContentType':'application/json'}
     else:
         abort(400)
 

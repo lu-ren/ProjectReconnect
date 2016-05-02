@@ -24,7 +24,14 @@ def run_match(user):
         params.append(modified.tolist())
     allOthers = numpy.array(params)
     me = numpy.insert(user.genomic_obj, 0, user.uid)
-    pdb.set_trace()
     results = get_matches(allOthers, me, alleleFreq)
-    pdb.set_trace()
     return results
+
+def get_match_results(results):
+    matches = []
+    for r in results:
+        user = User.query.filter_by(uid=r[0].item()).first()
+        lst = ['Name', user.full_name, 'Age', user.age, 'Email', user.email, 'PercentMatch', r[1]]
+        i = iter(lst)
+        matches.append(dict(zip(i,i)))
+    return matches
