@@ -62,16 +62,16 @@
               }
             };
             xhr.send(formData);
-            replaceWithSpinner();
+            // replaceWithSpinner();
         };
 
-        var replaceWithSpinner = function() {
-            $('#upload-box').fadeOut("slow", function() {
-              var div = $("<h1 id='spinner'>Please wait...</h1>").hide();
-              $(this).replaceWith(div);
-              $('#spinner').fadeIn("slow");
-            })
-        };
+        // var replaceWithSpinner = function() {
+        //     $('#upload-box').fadeOut("slow", function() {
+        //       var div = $("<h1 id='spinner'>Please wait...</h1>").hide();
+        //       $(this).replaceWith(div);
+        //       $('#spinner').fadeIn("slow");
+        //     })
+        // };
 
         var replaceWelcome = function() {
             $('#welcome-msg').fadeOut("slow", function() {
@@ -83,7 +83,7 @@
 
 
         var buildTable = function() {
-          $('#spinner').fadeOut("slow", function() {
+          $('#upload-box').fadeOut("slow", function() {
             var people = [
               {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com'},
               {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com'},

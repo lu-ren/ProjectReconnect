@@ -4,7 +4,7 @@ from werkzeug import secure_filename
 import os
 import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
-from projectreconnect.controllers.forms import create_account
+from projectreconnect.controllers.forms import create_account, update_user_genome
 from projectreconnect.models.model import User
 from projectreconnect import app
 import pdb
@@ -67,10 +67,12 @@ def logout():
 def upload():
     file = request.files['file']
     if file and allowed_file(file.filename):
-        import time #For development purposes
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        time.sleep(3)
+        import numpy
+        datastring = file.readline().decode('ascii')
+        reg_array = [int(string) for string in datastring]
+        # pdb.set_trace()
+        genome = numpy.array(reg_array)
+        update_user_genome(genome)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     else:
         abort(400)
