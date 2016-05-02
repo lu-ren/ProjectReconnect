@@ -30,7 +30,7 @@ def generate_sim_data():
         reader = csv.reader(f)
         namelst.append('James Potter')
         genome = [int(s) for s in next(reader)[0]]
-        genome.insert(0,0)
+        # genome.insert(0,0)
         emaillst.append('jp3999@hogwarts.edu')
         agelst.append(58)
         genomelst.append(numpy.array(genome))
@@ -39,7 +39,7 @@ def generate_sim_data():
         for elem in reader:
             strlist = list(elem[0])
             numlist = [int(s) for s in strlist]
-            numlist.insert(0, 0)
+            # numlist.insert(0, 0)
             numlist = numpy.array(numlist)
             name = names.get_full_name()
             email = name.replace(" ", "") + "@email.com"
@@ -49,7 +49,7 @@ def generate_sim_data():
             genomelst.append(numpy.array(numlist))
     for x in range(len(namelst)):
         new_user = User(namelst[x], agelst[x], emaillst[x], 'password')
-        new_user.genome_obj = genomelst[x]
+        new_user.genomic_obj = genomelst[x]
         db.session.add(new_user)
     db.session.commit()
 

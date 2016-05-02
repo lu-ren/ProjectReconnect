@@ -11,7 +11,7 @@ alleleFreq = []
 with open('allele_data/allelefreq.csv', 'r') as f:
     reader = csv.reader(f)
     for elem in reader:
-        alleleFreq.append(elem[0])
+        alleleFreq.append(float(elem[0]))
 alleleFreq = numpy.array(alleleFreq)
 
 def init_app(config_filename):

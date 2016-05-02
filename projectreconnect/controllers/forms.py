@@ -13,17 +13,18 @@ def create_account(name, age, email, password):
     return user
 
 def update_user_genome(genome):
-    current_user.genome_obj = genome
+    current_user.genomic_obj = genome
     db.session.commit()
 
 def run_match(user):
-    users = User.query.all()
-    pdb.set_trace()
+    users = User.query.filter(User.uid != user.uid).all()
     params = []
     for u in users:
-        modified = numpy.insert(u.genome_obj, 0, u.uid)
-        params.append(modified)
+        modified = numpy.insert(u.genomic_obj, 0, u.uid)
+        params.append(modified.tolist())
     allOthers = numpy.array(params)
-    me = numpy.insert(user.genome_obj, 0, user.uid)
+    me = numpy.insert(user.genomic_obj, 0, user.uid)
+    pdb.set_trace()
     results = get_matches(allOthers, me, alleleFreq)
+    pdb.set_trace()
     return results

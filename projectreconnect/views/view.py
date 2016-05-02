@@ -73,6 +73,7 @@ def upload():
         genome = numpy.array(reg_array)
         update_user_genome(genome)
         results = run_match(current_user)
+        pdb.set_trace()
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     else:
         abort(400)
