@@ -1,10 +1,18 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+import csv
+import numpy
 from .json_encoder import AlchemyEncoder
 
 app = None
 db = None
+alleleFreq = []
+with open('allele_data/allelefreq.csv', 'r') as f:
+    reader = csv.reader(f)
+    for elem in reader:
+        alleleFreq.append(elem[0])
+alleleFreq = numpy.array(alleleFreq)
 
 def init_app(config_filename):
 

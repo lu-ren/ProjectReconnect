@@ -78,21 +78,23 @@
         var buildTable = function() {
           $('#upload-box').fadeOut("slow", function() {
             var people = [
-              {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com'},
-              {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com'},
-              {Name: 'Bane Doe', Age: '28', Email: 'banedoe@email.com'}
+              {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com', PercentMatch:'98'},
+              {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com', PercentMatch:'98'},
+              {Name: 'Bane Doe', Age: '28', Email: 'banedoe@email.com', PercentMatch:'69'}
             ];
             var tmpl = $.templates('resultsTable',
               "<tr>\
                   <td>{{:Name}}</td>\
                   <td>{{:Age}}</td>\
                   <td>{{:Email}}</td>\
+                  <td>{{:PercentMatch}}</td>\
                 </tr>");
             var tableHeader = "<table id='results-table' class='table table-hover table-striped'>\
             <thead><tr>\
               <th>Name</th>\
               <th>Age</th>\
               <th>Email</th>\
+              <th>Percent Match</th>\
             </tr></thead>\
             <tbody>";
             var tableTail = "</tbody></table>";

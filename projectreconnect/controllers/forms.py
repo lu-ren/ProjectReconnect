@@ -3,7 +3,7 @@ from flask.ext.login import current_user
 import numpy
 from projectreconnect.models import User
 from projectreconnect.core import get_matches
-from projectreconnect import db
+from projectreconnect import db, alleleFreq
 import pdb
 
 def create_account(name, age, email, password):
@@ -24,6 +24,5 @@ def run_match(user):
         params.append(modified)
     allOthers = numpy.array(params)
     me = numpy.insert(user.genome_obj, 0, user.uid)
-    alleleFreq = numpy.random.random(size=200)
     results = get_matches(allOthers, me, alleleFreq)
     return results
