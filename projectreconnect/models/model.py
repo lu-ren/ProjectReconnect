@@ -13,6 +13,8 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
     hashed_password = db.Column(db.String, nullable=False)
     genomic_obj = db.Column(db.PickleType)
+    pic_path = db.Column(db.String, default='none')
+    description = db.Column(db.String)
 
     def __init__(self, full_name, age, email, password):
         self.full_name = full_name

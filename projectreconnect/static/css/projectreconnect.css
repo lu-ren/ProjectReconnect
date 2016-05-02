@@ -66,6 +66,19 @@ h1, input {
   border: none;
   border-bottom: 2px solid #ebebeb;
 }
+
+.img-circle {
+  width: 250px;
+  height: 250px;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+.user-entry {
+  display: block;
+  margin: 0 auto 15px;
+}
+
 .input:focus {
   outline: none;
   border-bottom-color: #3CC !important;

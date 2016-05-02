@@ -5,7 +5,6 @@
 {% endblock %}
 {% block content %}
   <nav class="navbar navbar-light bg-faded">
-    <ul class="nav navbar-nav">
     <form class="form-inline pull-xs-right" method="post" action="{{url_for('home.logout')}}">
       <button type="submit" class="btn btn-secondary">Log out</button>
     </form>
@@ -85,11 +84,6 @@
 
         var buildTable = function(people) {
           $('#spinner').fadeOut("slow", function() {
-            // var people = [
-            //   {Name: 'John Doe', Age: '19', Email: 'johndoe@email.com', PercentMatch:'98'},
-            //   {Name: 'Jane Doe', Age: '18', Email: 'janedoe@email.com', PercentMatch:'98'},
-            //   {Name: 'Bane Doe', Age: '28', Email: 'banedoe@email.com', PercentMatch:'69'}
-            // ];
             var tmpl = $.templates('resultsTable',
               "<tr>\
                   <td>{{:Name}}</td>\

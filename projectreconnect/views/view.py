@@ -6,6 +6,7 @@ import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
 from projectreconnect.controllers.forms import create_account, update_user_genome, run_match, get_match_results
 from projectreconnect.models.model import User
+from projectreconnect.core import parse23andme
 from projectreconnect import app
 import pdb
 
@@ -71,7 +72,11 @@ def upload():
     if file and allowed_file(file.filename):
         import numpy
         import time
-        datastring = file.readline().decode('ascii')
+        pdb.set_trace()
+        if os.path.splitext(file.filename)[1] == '.csv':
+            datastring = parse23andme(file)
+        else:
+            datastring = file.readline().decode('ascii')
         reg_array = [int(string) for string in datastring]
         genome = numpy.array(reg_array)
         update_user_genome(genome)
