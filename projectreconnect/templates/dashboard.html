@@ -55,6 +55,7 @@
             xhr.onload = function() {
               if (xhr.status === 200) {
                 //File uploaded
+                var response = JSON.parse(xhr.response);
                 replaceWelcome();
                 buildTable();
               } else {
@@ -62,16 +63,8 @@
               }
             };
             xhr.send(formData);
-            // replaceWithSpinner();
+            // $('#welcome-msg').innerHTML = "Uploading...";
         };
-
-        // var replaceWithSpinner = function() {
-        //     $('#upload-box').fadeOut("slow", function() {
-        //       var div = $("<h1 id='spinner'>Please wait...</h1>").hide();
-        //       $(this).replaceWith(div);
-        //       $('#spinner').fadeIn("slow");
-        //     })
-        // };
 
         var replaceWelcome = function() {
             $('#welcome-msg').fadeOut("slow", function() {

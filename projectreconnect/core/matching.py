@@ -30,7 +30,7 @@ max_Parents_PVal = 10
 max_Parents_Likelihood = 100
 
 '''
-Parents is a numpy two dimensional array with 
+Parents is a numpy two dimensional array with
 SNP positions across and inidividual genotypes down
 Child is a numpy one dimensional array
 returns list of parents along with Homozygote matches,
@@ -38,7 +38,7 @@ number of homozygous sites on child
 '''
 
 def ReconnectMatch(Parents, Child):
-    
+
     num_SNP_Pos = len(Child)
     num_Parents = Parents.shape[1]
     match_List = [0] * num_Parents
@@ -72,7 +72,7 @@ def find_Most_Likely(Parents, likelihood_List, match_List, max_Parents):
     return parent_Match_Likelihood_List
 
 def get_P_Values(Parents, Child, match_List, num_SNP_Pos, allele_Frequencies, max_Parents):
-    
+
     parent_Match_PVal_List = []
     top_Matches = np.argsort(match_List)[-max_Parents:]
 
@@ -104,14 +104,11 @@ def main(Parents, Child, allele_Frequencies):
     parent_Percent_List = []
 
     for match in parent_Match_Likelihood_List:
-        parent_Percent_List.append((match[0], "{0:.0f}%".format(match[1]/num_SNP_Pos))
-
+        parent_Percent_List.append((match[0], "{0:.0f}%".format(match[1]/num_SNP_Pos)))
     for match in parent_Percent_List:
         print(match)
 
-
 if __name__ == "__main__":
-    pdb.set_trace()
     Parents = numpy.random.randint(3, size=(501, 1000))
     Child = numpy.random.randint(3, size=501)
     allele_Frequencies = numpy.random.random(size = 501)

@@ -70,7 +70,6 @@ def upload():
         import numpy
         datastring = file.readline().decode('ascii')
         reg_array = [int(string) for string in datastring]
-        # pdb.set_trace()
         genome = numpy.array(reg_array)
         update_user_genome(genome)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
