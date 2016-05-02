@@ -4,7 +4,7 @@ from werkzeug import secure_filename
 import os
 import json
 from projectreconnect.forms.signup import SignInForm, SignUpForm
-from projectreconnect.controllers.forms import create_account, update_user_genome
+from projectreconnect.controllers.forms import create_account, update_user_genome, run_match
 from projectreconnect.models.model import User
 from projectreconnect import app
 import pdb
@@ -72,6 +72,7 @@ def upload():
         reg_array = [int(string) for string in datastring]
         genome = numpy.array(reg_array)
         update_user_genome(genome)
+        results = run_match(current_user)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     else:
         abort(400)

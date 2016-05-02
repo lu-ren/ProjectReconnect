@@ -2,6 +2,7 @@ from flask import redirect, url_for
 from flask.ext.login import current_user
 import numpy
 from projectreconnect.models import User
+from projectreconnect.core import get_matches
 from projectreconnect import db
 import pdb
 
@@ -21,4 +22,8 @@ def run_match(user):
     for u in users:
         modified = numpy.insert(u.genome_obj, 0, u.uid)
         params.append(modified)
-    
+    allOthers = numpy.array(params)
+    me = numpy.insert(user.genome_obj, 0, user.uid)
+    alleleFreq = numpy.random.random(size=200)
+    results = get_matches(allOthers, me, alleleFreq)
+    return results

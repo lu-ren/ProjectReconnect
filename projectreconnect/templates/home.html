@@ -6,10 +6,10 @@
         <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Technology</a>
+        <a class="nav-link" href="#technology">Technology</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="#about">About</a>
       </li>
     </ul>
     <form class="form-inline pull-xs-right" method="post" action="{{url_for('home.home')}}">
@@ -40,7 +40,54 @@
       <p>Project Reconnect is a project from Columbia University which helps match missing children with their parents using genomic data.</p>
       <p><a class="btn btn-info btn-lg" href="{{ url_for('home.signup') }}" role="button">Sign Up &raquo;</a></p>
     </div>
+    <div id="technology" style="padding-top:500px">
+      <div id="infobox">
+        <h1 style="padding-bottom:20px">Technology</h1>
+        <p>Project Reconnect utilizes the latest advances in Single Nucleotide Polymorphisms (SNP) data collection in order to efficiently and economically find parent-child relationships in large populations of individuals.
+Conceptually, SNP genotypes can be thought of as genetic barcodes which are unique to individuals and also inherited from parent to child.</p>
+<p>With just 384 positions along the genome, Project Reconnect is able to accurately identify parent-child relationships from billions of people.
+Since our method requires such few SNP positions, the “chips” which collect this data from parents and children can be produced at a low cost allowing for wide usage.
+Clients may process their SNP data at their most convenient location either in person or by mail and send us the results.
+Our online database can then help them find lost loved ones also in the system.</p>
+<p>The Reconnect algorithm works based upon a very simple biological principle; a person obtains genes from his or her parents.
+At each SNP location, a person has two nucleotides and each nucleotide can be one of two types.
+So, if a child is a homozygote meaning both of his or her nucleotides are the same, then the parent must carry at least one of that nucleotide in that position.
+Using the fact that a child and parent relationship must have at least one nucleotide of the same type the matching algorithm quickly finds parents who are the most likely match for each child.
+Our combination of cost-effective physical hardware and optimized digital processes allow Project Reconnect to efficiently and cheaply be used by anyone who wants to combat child exploitation.</p>
+      </div>
+    </div>
+    <div id="about" style="padding-top:500px">
+      <div id="infobox">
+        <h1 style="padding-bottom:20px">About</h1>
+        <p>Project Reconnect aims to use DNA technology to bring home missing children.
+          The Project was founded at Columbia University with the first prototype launching on May 2, 2016.</p>
+          <p>The initial focus of Reconnect is on Chinese and Indian population groups due to the high rate of human trafficking and child abduction in these countries.
+          We hope that this online service will enable parents, law enforcement, and the general public to combat the victimization of children.</p>
+          <p>Jianyi Ren, Luren Wang, and Calvin Tjandra form the team behind Project Reconnect under the advisement of Professor Itsik Pe’er at Columbia University.
+          This work was the result of a class project in Computational Genomics.</p>
+      </div>
+    </div>
   </div>
 
   </div> <!-- /container -->
+{% endblock %}
+{% block scripts %}
+  {{ super() }}
+
+  <script type="text/javascript">
+    $(".navbar-nav li a[href^='#']").on('click', function(e) {
+       // prevent default anchor click behavior
+       e.preventDefault();
+       // store hash
+       var hash = this.hash;
+       // animate
+       $('html, body').animate({
+           scrollTop: $(this.hash).offset().top
+         }, 300, function(){
+           // when done, add hash to url
+           // (default click behaviour)
+           window.location.hash = hash;
+         });
+    });
+  </script>
 {% endblock %}
