@@ -1,5 +1,4 @@
 #ReconnectMatching
-
 ''' PARAMETERS
 MINMATCH = Mnimum Number Homozygote Matches
 MAXMATCH = Maximum Number Homozygote Mismatches
@@ -95,7 +94,8 @@ def main(Parents, Child, allele_Frequencies):
     parent_Match_Likelihood_List = find_Most_Likely(Parents, likelihood_List, match_List, max_Parents_Likelihood)
     parent_Match_PVal_List = get_P_Values(Parents, Child, match_List, num_SNP_Pos, allele_Frequencies, max_Parents_PVal)
 
-    '''for match in parent_Match_Likelihood_List:
+    '''
+    for match in parent_Match_Likelihood_List:
         print(match)
     print ("\n")
     for match in  parent_Match_PVal_List:
@@ -104,7 +104,10 @@ def main(Parents, Child, allele_Frequencies):
     parent_Percent_List = []
 
     for match in parent_Match_Likelihood_List:
-        parent_Percent_List.append((match[0], "{0:.0f}%".format(match[1]/num_SNP_Pos))
+    tmp1 = float(match[1])
+    tmp2 = float(num_SNP_Pos)
+    parent_Percent_List.append((match[0], "{0:.0f}%".format((tmp1/tmp2)*100)))
+
 
     for match in parent_Percent_List:
         print(match)
