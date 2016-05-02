@@ -12,6 +12,46 @@ def setup():
     from projectreconnect import db
     db.drop_all() #for development purposes
     db.create_all()
+    generate_sim_data()
+
+def generate_sim_data():
+    import csv
+    import numpy
+    import names
+    from random import randint
+    from projectreconnect.models import User
+    from projectreconnect import db
+    userslst = []
+    namelst = []
+    emaillst = []
+    agelst = []
+    genomelst = []
+    with open('scripts/father0.txt') as f:
+        reader = csv.reader(f)
+        namelst.append('James Potter')
+        genome = [int(s) for s in next(reader)[0]]
+        genome.insert(0,0)
+        emaillst.append('jp3999@hogwarts.edu')
+        agelst.append(58)
+        genomelst.append(numpy.array(genome))
+    with open('scripts/Genotypes_Only.txt') as f:
+        reader = csv.reader(f)
+        for elem in reader:
+            strlist = list(elem[0])
+            numlist = [int(s) for s in strlist]
+            numlist.insert(0, 0)
+            numlist = numpy.array(numlist)
+            name = names.get_full_name()
+            email = name.replace(" ", "") + "@email.com"
+            namelst.append(name)
+            emaillst.append(email)
+            agelst.append(randint(20,100))
+            genomelst.append(numpy.array(numlist))
+    for x in range(len(namelst)):
+        new_user = User(namelst[x], agelst[x], emaillst[x], 'password')
+        new_user.genome_obj = genomelst[x]
+        db.session.add(new_user)
+    db.session.commit()
 
 if __name__ == '__main__':
     from flask.ext.login import LoginManager

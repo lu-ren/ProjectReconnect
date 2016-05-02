@@ -18,6 +18,7 @@ def update_user_genome(genome):
 
 def run_match(user):
     users = User.query.all()
+    pdb.set_trace()
     params = []
     for u in users:
         modified = numpy.insert(u.genome_obj, 0, u.uid)
