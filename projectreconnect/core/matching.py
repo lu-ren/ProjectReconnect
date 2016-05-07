@@ -21,12 +21,9 @@ MAXMATCH = 500
 Het = 1
 Ref = 0
 Non = 2
+NA = 9
 
-#pMATCHREAL = 0.999999
-pMATCHRAND = 1 - 2 * 0.16 * 0.36
-
-max_Parents_PVal = 10
-max_Parents_Likelihood = 100
+max_Parents = 100
 
 '''
 Parents is a numpy two dimensional array with
@@ -41,68 +38,71 @@ def ReconnectMatch(Parents, Child):
     num_SNP_Pos = len(Child)
     num_Parents = Parents.shape[0]
     match_List = [0] * num_Parents
+    parent_Num_SNP_Pos = [0] * num_Parents
 
     for child_Allele in range(1,num_SNP_Pos):
         for parent_gen in range(0, num_Parents):
-            if Child[child_Allele] == Het:
-                match_List[parent_gen] += 1
-            elif Child[child_Allele] != Het:
-                if Child[child_Allele] == Parents[parent_gen, child_Allele]:
+            if Child[child_Allele] != NA and Parents[parent_gen, child_Allele] != NA:
+                parent_Num_SNP_Pos[parent_gen] += 1
+                if Child[child_Allele] == Het:
                     match_List[parent_gen] += 1
-                elif Parents[parent_gen, child_Allele] == Het:
-                    match_List[parent_gen] += 1
+                elif Child[child_Allele] != Het:
+                    if Child[child_Allele] == Parents[parent_gen, child_Allele]:
+                        match_List[parent_gen] += 1
+                    elif Parents[parent_gen, child_Allele] == Het:
+                        match_List[parent_gen] += 1
 
 
-    return match_List, num_SNP_Pos
+    return match_List, parent_Num_SNP_Pos, num_SNP_Pos
 
-def Calculate_Likelihood_Ratios(match_List, num_SNP_Pos, pMATCHRAND):
-    likelihood_List = [0] * len(match_List)
+def find_Most_Likely(Parents, match_List, parent_Num_SNP_Pos, max_Parents):
 
-    for parent_Idx in range(0, len(match_List)):
-        if match_List[parent_Idx] >= MINMATCH and num_SNP_Pos - match_List[parent_Idx] <= MAXMATCH:
-            likelihood_List[parent_Idx] = dec.Decimal(pMATCHRAND **  match_List[parent_Idx])
-
-    return likelihood_List
-
-def find_Most_Likely(Parents, likelihood_List, match_List, max_Parents):
-
-    parent_Match_Likelihood_List = []
+    parent_Match_List = []
     top_Matches = np.argsort(match_List)[-max_Parents:]
     for x in range(max_Parents-1, -1, -1):
-        parent_Match_Likelihood_List.append((Parents[top_Matches[x],0], match_List[top_Matches[x]], dec.Decimal(likelihood_List[top_Matches[x]])))
+        parent_Match_List.append((Parents[top_Matches[x],0], match_List[top_Matches[x]], parent_Num_SNP_Pos[top_Matches[x]]))
 
-    return parent_Match_Likelihood_List
+    return parent_Match_List
 
 def get_P_Values(Parents, Child, match_List, num_SNP_Pos, allele_Frequencies, max_Parents):
 
     parent_Match_PVal_List = []
+
     top_Matches = np.argsort(match_List)[-max_Parents:]
 
     for x in range(max_Parents-1, -1, -1):
         p_Val = dec.Decimal(1)
         for child_Allele in range(1,num_SNP_Pos):
-            if Child[child_Allele] != Het:
-                if Child[child_Allele] == Parents[top_Matches[x], child_Allele]:
-                    p_Val = p_Val * dec.Decimal(1 - allele_Frequencies[child_Allele] ** 2 - (1 - allele_Frequencies[child_Allele]) ** 2)
+            if Child[child_Allele] != NA and Parents[top_Matches[x], child_Allele] != NA:
                 if Child[child_Allele] == Het:
-                    if Parents[top_Matches[x], child_Allele] == Het:
+                    p_Val = p_Val * dec.Decimal(1 - allele_Frequencies[child_Allele] ** 2 - (1 - allele_Frequencies[child_Allele]) ** 2)
+                elif Child[child_Allele] != Het:
+                    if Child[child_Allele] == Parents[top_Matches[x], child_Allele]:
+                        p_Val = p_Val * dec.Decimal(1 - allele_Frequencies[child_Allele] ** 2 - (1 - allele_Frequencies[child_Allele]) ** 2)
+                    elif Parents[top_Matches[x], child_Allele] == Het:
                         p_Val = p_Val * dec.Decimal(1 - allele_Frequencies[child_Allele] ** 2 - (1 - allele_Frequencies[child_Allele]) ** 2)
         parent_Match_PVal_List.append((Parents[top_Matches[x],0], match_List[top_Matches[x]], dec.Decimal(p_Val)))
 
     return parent_Match_PVal_List
 
 def get_matches(Parents, Child, allele_Frequencies):
-    match_List, num_SNP_Pos = ReconnectMatch(Parents, Child)
-    likelihood_List = Calculate_Likelihood_Ratios(match_List, num_SNP_Pos, pMATCHRAND)
-    parent_Match_Likelihood_List = find_Most_Likely(Parents, likelihood_List, match_List, max_Parents_Likelihood)
-    # parent_Match_PVal_List = get_P_Values(Parents, Child, match_List, num_SNP_Pos, allele_Frequencies, max_Parents_PVal)
+    match_List, parent_Num_SNP_Pos, num_SNP_Pos = ReconnectMatch(Parents, Child)
+    parent_Match_List = find_Most_Likely(Parents, match_List, parent_Num_SNP_Pos, max_Parents)
+    parent_Match_PVal_List = get_P_Values(Parents, Child, match_List, num_SNP_Pos, allele_Frequencies, max_Parents)
 
     parent_Percent_List = []
 
-    for match in parent_Match_Likelihood_List:
+    for match in parent_Match_List:
         tmp1 = float(match[1])
-        tmp2 = float(num_SNP_Pos)
+        tmp2 = float(match[2])
         parent_Percent_List.append((match[0], "{0:.0f}%".format((tmp1/tmp2)*100)))
+
+    # for absolute p_Values
+
+    # print parent_Match_PVal_List
+
+    # uncomment statement above
+
 
     return parent_Percent_List[:10]
 
