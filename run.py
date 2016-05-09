@@ -11,8 +11,8 @@ from projectreconnect import app
 def setup():
     from projectreconnect import db
     # db.drop_all() #for development purposes
-    # db.create_all()
-    # generate_sim_data()
+    db.create_all()
+    generate_sim_data()
 
 def generate_sim_data():
     import csv
